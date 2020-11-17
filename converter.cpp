@@ -78,6 +78,27 @@ void infixtoprefix(string s){
     reverse(ans.begin(),ans.end());
     cout<<"Infix to Prefix Expression = "<<ans<<endl<<endl;
 }
+bool isOperator(char c){
+    if(c=='+'||c=='-'||c=='/'||c=='*'||c=='^') return true;
+    return false;
+}
+void prefixtoinfix(string s){
+    stack<string> st;
+    for(int i=s.length()-1;i>=0;i--){
+        if(isOperator(s[i])){
+            string t=st.top();
+            st.pop();
+            string t2= st.top();
+            st.pop();
+            st.push('('+t+s[i]+t2+')');
+        }
+        else{
+            string t(1,s[i]);
+            st.push(t);
+        }
+    }
+    cout<<"Prefix to Infix Expression = "<<st.top()<<endl<<endl;
+}
 void intro(){
     cout<<"Welcome TO Expression Evalutaor\n\t\tBy: Manav Dhiman\n\n";
 }
@@ -98,6 +119,7 @@ int main(){
     cin>>i;
     switch(i){
         case 1:
+        cout<<"\n\nEnter your string = ";
         cin>>s;
         goto g;
         case 2:
@@ -112,18 +134,18 @@ int main(){
         case 5:
         prefixtoinfix(s);
         goto g;
-        case 6:
-        postfixtoprefix(s);
-        goto g;
-        case 7:
-        infix_eval(s);
-        goto g;
-        case 8:
-        postfix_eval(s);
-        goto g;
-        case 9:
-        prefix_eval(s);
-        goto g;
+        // case 6:
+        // postfixtoprefix(s);
+        // goto g;
+        // case 7:
+        // infix_eval(s);
+        // goto g;
+        // case 8:
+        // postfix_eval(s);
+        // goto g;
+        // case 9:
+        // prefix_eval(s);
+        // goto g;
         case 10:
         break;
     }
