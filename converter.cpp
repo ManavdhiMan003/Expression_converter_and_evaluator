@@ -43,7 +43,29 @@ void infixtopostfix(string s){
         st.pop();
         ans+=ch;
     }
-    cout<<"Postfix Expression = "<<ans<<endl;
+    cout<<"\nInfix to Postfix Expression = "<<ans<<endl<<endl;
+}
+bool operand(char c){
+    if(c>='a'&&c<='z'||c>='A'&&c<='Z') return true;
+    return false;
+}
+void postfixtoinfix(string s){
+    stack<string> st;
+    int len = s.length();
+    loop(i,len){
+        if(operand(s[i])){
+            string t(1,s[i]);
+            st.push(t);
+        }
+        else{
+            string t1=st.top();
+            st.pop();
+            string t2=st.top();
+            st.pop();
+            st.push("("+t2+s[i]+t1+")");
+        }
+    }
+    cout<<"\nPostfix to Infix Expression = "<<st.top()<<endl<<endl;
 }
 void intro(){
     cout<<"Welcome TO Expression Evalutaor\n\t\tBy: Manav Dhiman\n\n";
@@ -54,7 +76,7 @@ int main(){
     int i;
     g:cout<<"Enter 1 for input Expression\n";
     cout<<"Enter 2 for Infix to Postfix\n";
-    cout<<"Enter 3 for Infix to Prefix\n";
+    cout<<"Enter 3 for Postfix to Infix\n";
     cout<<"Enter 4 for Prefix to Infix\n";
     cout<<"Enter 5 for Prefix to Postfix\n";
     cout<<"Enter 6 for Postfix to Prefix\n";
@@ -67,32 +89,30 @@ int main(){
         case 1:
         cin>>s;
         goto g;
-        break;
         case 2:
         infixtopostfix(s);
         goto g;
-        break;
         case 3:
-        infixtoprefix(s);
-        break;
+        postfixtoinfix(s);
+        goto g;
         case 4:
         prefixtoinfix(s);
-        break;
+        goto g;
         case 5:
         prefixtopostfix(s);
-        break;
+        goto g;
         case 6:
         postfixtoprefix(s);
-        break;
+        goto g;
         case 7:
         infix_eval(s);
-        break;
+        goto g;
         case 8:
         postfix_eval(s);
-        break;
+        goto g;
         case 9:
         prefix_eval(s);
-        break;
+        goto g;
         case 10:
         break;
     }
