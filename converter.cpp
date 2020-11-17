@@ -5,6 +5,7 @@ using namespace std;
 #define loop1(i,k,n) for(i=k;i<n;i++)
 #define pb push_back
 typedef long long int ll;
+void 
 void intro(){
     cout<<"Welcome TO Expression Evalutaor\n\t\tBy: Manav Dhiman\n\n";
 }
@@ -27,28 +28,28 @@ int main(){
         cin>>s;
         break;
         case 2:
-        infixtopostfix();
+        infixtopostfix(s);
         break;
         case 3:
-        infixtoprefix();
+        infixtoprefix(s);
         break;
         case 4:
-        prefixtoinfix();
+        prefixtoinfix(s);
         break;
         case 5:
-        prefixtopostfix();
+        prefixtopostfix(s);
         break;
         case 6:
-        postfixtoprefix();
+        postfixtoprefix(s);
         break;
         case 7:
-        infix_eval();
+        infix_eval(s);
         break;
         case 8:
-        postfix_eval();
+        postfix_eval(s);
         break;
         case 9:
-        prefix_eval();
+        prefix_eval(s);
         break;
     }
     return 0;
