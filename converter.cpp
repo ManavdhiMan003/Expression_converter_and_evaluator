@@ -141,7 +141,7 @@ int expr(int val,int val2,char c){
     if(c=='^') return val2^val;
     return 0;
 }
-int postfix_eval(string s){
+void postfix_eval(string s){
     stack<int> st;
     loop(i,s.length()){
         if(s[i]==' ') continue;
@@ -162,7 +162,7 @@ int postfix_eval(string s){
             st.push(expr(val,val2,s[i]));
         }
     }
-    return st.top();
+    cout<<"\nPostfix Evaluation = "<<st.top()<<endl<<endl;
 }
 void prefix_eval(string s){
     stack<int> st;
@@ -186,6 +186,56 @@ void prefix_eval(string s){
         }
     }
     cout<<"\nPrefix Expression = "<<st.top()<<endl<<endl;
+}
+void infix_eval(string s){
+    stack<int> st;
+    stack<char> opd;
+    loop(i,s.length()){
+        if(s[i]==' ') continue;
+        else if(s[i]=='(') opd.push(s[i]);
+        else if(isdigit(s[i])){
+            int no=0;
+            while(isdigit(s[i])&&i<s.length()){
+                no=no*10+int(s[i++]-'0');
+            }
+            i--;
+            st.push(no);
+        }
+        else if(s[i]==')'){
+            while(!opd.empty()&&opd.top()!='('){
+                int t=st.top();
+                st.pop();
+                int t2=st.top();
+                st.pop();
+                char c = opd.top();
+                opd.pop();
+                st.push(expr(t,t2,c));
+            }
+            if(!opd.empty()) opd.pop();
+        }
+        else{
+            while(!opd.empty()&&order(s[i])<=order(opd.top())){
+                int t=st.top();
+                st.pop();
+                int t2=st.top();
+                st.pop();
+                char c = opd.top();
+                opd.pop();
+                st.push(expr(t,t2,c));
+            }
+            opd.push(s[i]);
+        }
+    }
+    while(!opd.empty()){
+        int t=st.top();
+        st.pop();
+        int t2=st.top();
+        st.pop();
+        char c = opd.top();
+        opd.pop();
+        st.push(expr(t,t2,c));
+    }
+    cout<<"\nInfix Evaluation = "<<st.top()<<endl<<endl;
 }
 void intro(){
     cout<<"Welcome TO Expression Evalutaor\n\t\tBy: Manav Dhiman\n\n";
@@ -231,11 +281,11 @@ int main(){
         case 7:
         postfixtoprefix(s); 
         goto g;
-        // case 8:
-        // infix_eval(s);
-        // goto g;
+        case 8:
+        infix_eval(s);
+        goto g;
         case 9:
-        cout<<"Postfix Evaluation = "<<postfix_eval(s)<<endl<<endl;
+        postfix_eval(s);
         goto g;
         case 10:
         prefix_eval(s);
