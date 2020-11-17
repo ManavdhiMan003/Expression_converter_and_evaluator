@@ -113,6 +113,25 @@ void prefixtopostfix(string s){
     }
     cout<<"Prefix to Postfix Expression = "<<st.top()<<endl<<endl;
 }
+void postfixtoprefix(string s){
+    stack<string> st;
+    loop(i,s.length()){
+        if(isOperator(s[i])){
+            string t = st.top();
+            st.pop();
+            string t2 = st.top();
+            st.pop();
+            st.push(s[i]+t2+t);
+        }
+        else    st.push(string(1,s[i]));
+    }
+    string ans;
+    while(!st.empty()){
+        ans+=st.top();
+        st.pop();
+    }
+    cout<<"Postfix to Prefix Expression = "<<ans<<endl<<endl;
+}
 void intro(){
     cout<<"Welcome TO Expression Evalutaor\n\t\tBy: Manav Dhiman\n\n";
 }
@@ -136,7 +155,7 @@ int main(){
         case 1:
         cout<<"\n\nEnter your string = ";
         cin>>s;
-        cout<<endl<<endl;
+        cout<<endl;
         goto g;
         case 2:
         cout<<"\nInfix to Postfix Expression = "<<infixtopostfix(s)<<endl<<endl;
@@ -155,7 +174,8 @@ int main(){
         goto g;
         case 7:
         postfixtoprefix(s); 
-        // case 7:
+        goto g;
+        // case 8:
         // infix_eval(s);
         // goto g;
         // case 8:
