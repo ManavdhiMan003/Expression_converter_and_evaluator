@@ -99,6 +99,20 @@ void prefixtoinfix(string s){
     }
     cout<<"Prefix to Infix Expression = "<<st.top()<<endl<<endl;
 }
+void prefixtopostfix(string s){
+    stack<string> st;
+    for(int i=s.length()-1;i>=0;i--){
+        if(isOperator(s[i])){
+            string t=st.top();
+            st.pop();
+            string t2 = st.top();
+            st.pop();
+            st.push(t+t2+s[i]);
+        }
+        else    st.push(string(1,s[i]));
+    }
+    cout<<"Prefix to Postfix Expression = "<<st.top()<<endl<<endl;
+}
 void intro(){
     cout<<"Welcome TO Expression Evalutaor\n\t\tBy: Manav Dhiman\n\n";
 }
@@ -111,16 +125,18 @@ int main(){
     cout<<"Enter 3 for Postfix to Infix\n";
     cout<<"Enter 4 for Infix to Prefix\n";
     cout<<"Enter 5 for Prefix to Infix\n";
-    cout<<"Enter 6 for Postfix to Prefix\n";
-    cout<<"Enter 7 for Infix Evalutaion\n";
-    cout<<"Enter 8 for Postfix Evalutaion\n";
-    cout<<"Enter 9 for Prefix Evalutaion\n";
-    cout<<"Enter 10 for exit\n";
+    cout<<"Enter 6 for Prefix to Postfix\n";
+    cout<<"Enter 7 for Postfix to Prefix\n";
+    cout<<"Enter 8 for Infix Evalutaion\n";
+    cout<<"Enter 9 for Postfix Evalutaion\n";
+    cout<<"Enter 10 for Prefix Evalutaion\n";
+    cout<<"Enter 11 for exit\n";
     cin>>i;
     switch(i){
         case 1:
         cout<<"\n\nEnter your string = ";
         cin>>s;
+        cout<<endl<<endl;
         goto g;
         case 2:
         cout<<"\nInfix to Postfix Expression = "<<infixtopostfix(s)<<endl<<endl;
@@ -134,9 +150,11 @@ int main(){
         case 5:
         prefixtoinfix(s);
         goto g;
-        // case 6:
-        // postfixtoprefix(s);
-        // goto g;
+        case 6:
+        prefixtopostfix(s);
+        goto g;
+        case 7:
+        postfixtoprefix(s); 
         // case 7:
         // infix_eval(s);
         // goto g;
