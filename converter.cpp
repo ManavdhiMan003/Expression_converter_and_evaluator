@@ -12,6 +12,22 @@ int order(char c){
     else if(c=='+'||c=='-') return 1;
     return -1;
 }
+bool isOperator(char c){
+    if(c=='+'||c=='-'||c=='/'||c=='*'||c=='^') return true;
+    return false;
+}
+bool operand(char c){
+    if(c>='a'&&c<='z'||c>='A'&&c<='Z') return true;
+    return false;
+}
+int expr(int val,int val2,char c){
+    if(c=='+') return val+val2;
+    if(c=='-') return val2-val;
+    if(c=='*') return val*val2;
+    if(c=='/') return val2/val;
+    if(c=='^') return val2^val;
+    return 0;
+}
 string infixtopostfix(string s){
     stack<char> st;
     int len=s.length();
@@ -46,10 +62,6 @@ string infixtopostfix(string s){
     }
     return ans;
 }
-bool operand(char c){
-    if(c>='a'&&c<='z'||c>='A'&&c<='Z') return true;
-    return false;
-}
 void postfixtoinfix(string s){
     stack<string> st;
     int len = s.length();
@@ -78,10 +90,6 @@ void infixtoprefix(string s){
     string ans = infixtopostfix(s);
     reverse(ans.begin(),ans.end());
     cout<<"Infix to Prefix Expression = "<<ans<<endl<<endl;
-}
-bool isOperator(char c){
-    if(c=='+'||c=='-'||c=='/'||c=='*'||c=='^') return true;
-    return false;
 }
 void prefixtoinfix(string s){
     stack<string> st;
@@ -132,14 +140,6 @@ void postfixtoprefix(string s){
         st.pop();
     }
     cout<<"Postfix to Prefix Expression = "<<ans<<endl<<endl;
-}
-int expr(int val,int val2,char c){
-    if(c=='+') return val+val2;
-    if(c=='-') return val2-val;
-    if(c=='*') return val*val2;
-    if(c=='/') return val2/val;
-    if(c=='^') return val2^val;
-    return 0;
 }
 void postfix_eval(string s){
     stack<int> st;
