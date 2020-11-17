@@ -42,13 +42,13 @@ int main(){
         postfixtoprefix();
         break;
         case 7:
-        infixeval();
+        infix_eval();
         break;
         case 8:
-        postfixeval();
+        postfix_eval();
         break;
         case 9:
-        prefixeval();
+        prefix_eval();
         break;
     }
     return 0;
