@@ -164,6 +164,29 @@ int postfix_eval(string s){
     }
     return st.top();
 }
+void prefix_eval(string s){
+    stack<int> st;
+    for(int i=s.length()-1;i>=0;i--){
+        if(s[i]==' ') continue;
+        if(isdigit(s[i])){
+            int no=0;
+            while(isdigit(s[i])){
+                no=no*10+int(s[i]-'0');
+                i++;
+            }
+            i--;
+            st.push(no);
+        }
+        else{
+            int t=st.top();
+            st.pop();
+            int t2=st.top();
+            st.pop();
+            st.push(expr(t2,t,s[i]));
+        }
+    }
+    cout<<"\nPrefix Expression = "<<st.top()<<endl<<endl;
+}
 void intro(){
     cout<<"Welcome TO Expression Evalutaor\n\t\tBy: Manav Dhiman\n\n";
 }
@@ -212,11 +235,11 @@ int main(){
         // infix_eval(s);
         // goto g;
         case 9:
-        cout<<postfix_eval(s)<<endl;
+        cout<<"Postfix Evaluation = "<<postfix_eval(s)<<endl<<endl;
         goto g;
-        // case 10:
-        // prefix_eval(s);
-        // goto g;
+        case 10:
+        prefix_eval(s);
+        goto g;
         case 11:
         break;
     }
