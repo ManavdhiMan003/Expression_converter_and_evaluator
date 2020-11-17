@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include<string>
 using namespace std;
 #define endl "\n"
 #define loop(i,n) for(int i=0;i<n;i++)
@@ -132,6 +133,37 @@ void postfixtoprefix(string s){
     }
     cout<<"Postfix to Prefix Expression = "<<ans<<endl<<endl;
 }
+int expr(int val,int val2,char c){
+    if(c=='+') return val+val2;
+    if(c=='-') return val2-val;
+    if(c=='*') return val*val2;
+    if(c=='/') return val2/val;
+    if(c=='^') return val2^val;
+    return 0;
+}
+int postfix_eval(string s){
+    stack<int> st;
+    loop(i,s.length()){
+        if(s[i]==' ') continue;
+        else if(isdigit(s[i])){
+            int no=0;
+            while(isdigit(s[i])){
+                no=no*10+int(s[i]-'0');
+                i++;
+            }
+            i--;
+            st.push(no);
+        }
+        else{
+            int val=st.top();
+            st.pop();
+            int val2 = st.top();
+            st.pop();
+            st.push(expr(val,val2,s[i]));
+        }
+    }
+    return st.top();
+}
 void intro(){
     cout<<"Welcome TO Expression Evalutaor\n\t\tBy: Manav Dhiman\n\n";
 }
@@ -154,7 +186,8 @@ int main(){
     switch(i){
         case 1:
         cout<<"\n\nEnter your string = ";
-        cin>>s;
+        cin.ignore();
+        getline(cin,s);
         cout<<endl;
         goto g;
         case 2:
@@ -178,13 +211,13 @@ int main(){
         // case 8:
         // infix_eval(s);
         // goto g;
-        // case 8:
-        // postfix_eval(s);
-        // goto g;
-        // case 9:
+        case 9:
+        cout<<postfix_eval(s)<<endl;
+        goto g;
+        // case 10:
         // prefix_eval(s);
         // goto g;
-        case 10:
+        case 11:
         break;
     }
     return 0;
