@@ -34,7 +34,19 @@ string infixtopostfix(string s){
     string ans;
     st.push('\n');
     loop(i,len){
-        if((s[i]>='a'&&s[i]<='z')||(s[i]>='A'&&s[i]<='Z')) ans+=s[i];
+        if(s[i]==' ') continue;
+        if((s[i]>='a'&&s[i]<='z')||(s[i]>='A'&&s[i]<='Z')||isdigit(s[i])){
+            if(isdigit(s[i])){
+                int no=0;
+                while(isdigit(s[i])){
+                    no=no*10+int(s[i]-'0');
+                    i++;
+                }
+                i--;
+                ans+=to_string(no)+' ';
+            }
+            else ans+=s[i];
+        }
         else if(s[i]=='(') st.push('(');
         else if(s[i]==')'){
             while(st.top()!='\n'&&st.top()!='('){
@@ -66,9 +78,21 @@ void postfixtoinfix(string s){
     stack<string> st;
     int len = s.length();
     loop(i,len){
-        if(operand(s[i])){
-            string t(1,s[i]);
-            st.push(t);
+        if(s[i]==' ') continue;
+        else if(operand(s[i])||isdigit(s[i])){
+            if(isdigit(s[i])){
+                int no=0;
+                while(isdigit(s[i])){
+                    no=no*10+int(s[i]-'0');
+                    i++;
+                }
+                i--;
+                st.push(to_string(no));
+            }
+            else{
+                string t(1,s[i]);
+                st.push(t);
+            }
         }
         else{
             string t1=st.top();
@@ -94,16 +118,29 @@ void infixtoprefix(string s){
 void prefixtoinfix(string s){
     stack<string> st;
     for(int i=s.length()-1;i>=0;i--){
-        if(isOperator(s[i])){
+        if(s[i]==' ') continue;
+        else if(isOperator(s[i])){
             string t=st.top();
             st.pop();
             string t2= st.top();
             st.pop();
-            st.push('('+t+s[i]+t2+')');
+            st.push('('+t+" "+s[i]+t2+')'+" ");
         }
         else{
-            string t(1,s[i]);
-            st.push(t);
+            if(isdigit(s[i])){
+                string temp="";
+                while(isdigit(s[i])){
+                    temp+=s[i];
+                    i--;
+                }
+                i++;
+                reverse(temp.begin(),temp.end());
+                st.push(" "+temp);
+            }
+            else{
+                string t(1,s[i]);
+                st.push(t);
+            }
         }
     }
     cout<<"Prefix to Infix Expression = "<<st.top()<<endl<<endl;
@@ -111,28 +148,58 @@ void prefixtoinfix(string s){
 void prefixtopostfix(string s){
     stack<string> st;
     for(int i=s.length()-1;i>=0;i--){
-        if(isOperator(s[i])){
+        if(s[i]==' ') continue;
+        else if(isOperator(s[i])){
             string t=st.top();
             st.pop();
             string t2 = st.top();
             st.pop();
-            st.push(t+t2+s[i]);
+            st.push(t+t2+s[i]+" ");
         }
-        else    st.push(string(1,s[i]));
+        else{
+            int no=0;
+            if(isdigit(s[i])){
+                while(isdigit(s[i])){
+                no=no*10+int(s[i]-'0');
+                i--;
+                }
+                i++;
+                string temp=to_string(no);
+                reverse(temp.begin(),temp.end());
+                st.push(temp+" ");
+            }
+            else{
+                st.push(string(1,s[i]));
+            }
+        }
     }
     cout<<"Prefix to Postfix Expression = "<<st.top()<<endl<<endl;
 }
 void postfixtoprefix(string s){
     stack<string> st;
     loop(i,s.length()){
-        if(isOperator(s[i])){
+        if(s[i]==' ') continue;
+        else if(isOperator(s[i])){
             string t = st.top();
             st.pop();
             string t2 = st.top();
             st.pop();
             st.push(s[i]+t2+t);
         }
-        else    st.push(string(1,s[i]));
+        else{
+            if(isdigit(s[i])){
+                int no=0;
+                while(isdigit(s[i])){
+                    no=no*10+int(s[i]-'0');
+                    i++;
+                }
+                i--;
+                st.push(" "+to_string(no));
+            }
+            else{
+                st.push(string(1,s[i]));
+            }
+        }
     }
     string ans;
     while(!st.empty()){
