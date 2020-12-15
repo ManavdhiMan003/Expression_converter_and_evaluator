@@ -172,9 +172,9 @@ void prefix_eval(string s){
             int no=0;
             while(isdigit(s[i])){
                 no=no*10+int(s[i]-'0');
-                i++;
+                i--;
             }
-            i--;
+            i++;
             st.push(no);
         }
         else{
